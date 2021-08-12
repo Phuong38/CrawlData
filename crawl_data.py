@@ -1,3 +1,4 @@
+from requests.api import get
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
@@ -12,7 +13,7 @@ from urllib.request import urlretrieve
 import requests
 import os
 
-PATH = r"geckodriver-v0.29.1-linux64/geckodriver"
+PATH = r"D:\geckodriver.exe"
 EDGPATH = r"D:\EdgDriver\msedgedriver.exe"
 COUNT = 0
 SOURCR_IMAGE_URLs = []
@@ -20,12 +21,13 @@ SOURCE = []
 options = webdriver.FirefoxOptions()
 options.add_argument('--no-sandbox')
 
+
 driver = webdriver.Firefox(executable_path=PATH, options=options)
 # driver = webdriver.Edge(executable_path=EDGPATH) 
 action = ActionChains(driver)
 
 
-def get_all_result(search_url):
+def get_all_result(search_url,dirs):
     driver.get(search_url)
     print(driver.title)
 
@@ -67,9 +69,10 @@ def get_all_result(search_url):
 
     print(count)
     # driver.quit()
+    download_image(dirs)
     
 
-def download_image():
+def download_image(dirs):
     for source_url in SOURCR_IMAGE_URLs:
         print(source_url)
         driver.get(source_url)
@@ -82,7 +85,7 @@ def download_image():
             res = requests.get(image_url, verify=True, stream=True)
             rawdata = res.raw.read()
             file_name = image_url.split("?")[0].split("/")[-1]
-            dirs = "Trafic"
+            # dirs = "Trafic"
             if not os.path.exists(dirs):
                 os.makedirs(dirs)
             with open(os.path.join(dirs,file_name), 'wb') as f:
@@ -93,10 +96,15 @@ def download_image():
 
 
 def main():
-    # driver.get("https://www.flickr.com/search/?media=photos&text=family")
-    get_all_result("https://www.flickr.com/search/?text=trafic&media=photos")
-    time.sleep(2)
-    download_image()
+    get_all_result("https://www.flickr.com/search/?media=photos&text=family","Family")
+    get_all_result("https://www.flickr.com/search/?text=trafic&media=photos","Tracfic")
+    get_all_result("https://www.flickr.com/search/?media=photos&advanced=1&text=student","Student")
+    get_all_result("https://www.flickr.com/search/?media=photos&advanced=1&text=traffic%20accidents","Tracffic_accidents")
+    get_all_result("https://www.flickr.com/search/?media=photos&advanced=1&text=school","School")
+    get_all_result("https://www.flickr.com/search/?media=photos&advanced=1&text=domestic%20violence","Domestic_violence")
+
+
+ 
 
 
 if __name__ == '__main__':
