@@ -7,12 +7,13 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
 import time
+import  random
 from urllib.request import urlretrieve
 import requests
 import os
 
-PATH = "D:\geckodriver.exe"
-EDGPATH = "D:\EdgDriver\msedgedriver.exe"
+PATH = r"geckodriver-v0.29.1-linux64/geckodriver"
+EDGPATH = r"D:\EdgDriver\msedgedriver.exe"
 COUNT = 0
 SOURCR_IMAGE_URLs = []
 SOURCE = []
@@ -24,7 +25,6 @@ driver = webdriver.Firefox(executable_path=PATH, options=options)
 action = ActionChains(driver)
 
 
-
 def get_all_result(search_url):
     driver.get(search_url)
     print(driver.title)
@@ -33,6 +33,7 @@ def get_all_result(search_url):
     element = driver.find_element(By.TAG_NAME,value='body')
     for i in range(250):
         print(i, end="\a")
+        time.sleep(random.randrange(4))
         element.send_keys(Keys.PAGE_DOWN)
         try:
             more_result = WebDriverWait(driver,1).until(
@@ -45,8 +46,8 @@ def get_all_result(search_url):
             #     element.send_keys(Keys.PAGE_DOWN)
         except Exception as error:
             print(error, end="\a")        
-        finally:
             continue
+
     print('end page')
     time.sleep(0.5)
 
@@ -89,8 +90,6 @@ def download_image():
         except Exception as e:
             print('Failed to write rawdata.')
             print(e)
-        finally:
-            continue
 
 
 def main():
@@ -98,6 +97,7 @@ def main():
     get_all_result("https://www.flickr.com/search/?text=trafic&media=photos")
     time.sleep(2)
     download_image()
+
 
 if __name__ == '__main__':
     main()
