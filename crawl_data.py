@@ -13,7 +13,7 @@ from urllib.request import urlretrieve
 import requests
 import os
 
-PATH = r"D:\geckodriver.exe"
+PATH = r"D:\CrawlData\geckodriver.exe"
 EDGPATH = r"D:\EdgDriver\msedgedriver.exe"
 COUNT = 0
 SOURCR_IMAGE_URLs = []

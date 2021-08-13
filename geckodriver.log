@@ -184,3 +184,4 @@ JavaScript error: resource:///modules/Interactions.jsm, line 209: NS_ERROR_FAILU
 
 ###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
 
+1628821368506	geckodriver	INFO	Listening on 127.0.0.1:62239
